@@ -1,0 +1,50 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">Pridėti naują inventorizuojamą daiktą</div>
+        <div class="card-body">
+            <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label for="" class="form-label">Inventorizavimo numeris:</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        formControlName="inv_number"
+                        [class.is-invalid]="! itemForm.get('inv_number')?.valid && itemForm.get('inv_number')?.touched"
+                    >
+                    <div class="helper-block" *ngIf="! itemForm.get('inv_number')?.valid && itemForm.get('inv_number')?.touched">Laukelis yra privalomas</div>
+                </div>
+                <div class="mb-3">
+                    <label for="" class="form-label">Pavadinimas</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        formControlName="name"
+                        [class.is-invalid]="! itemForm.get('name')?.valid && itemForm.get('name')?.touched"
+                    >
+                    <div class="helper-block" *ngIf="! itemForm.get('name')?.valid && itemForm.get('name')?.touched">Laukelis yra privalomas, turi būti ne trumpesnis nei 3 simboliai ir ne ilgesnis nei 32 simboliai</div>
+                </div>
+                <div class="mb-3">
+                    <label for="" class="form-label">Daikto lokacijos:</label>
+                    <div class="row" formArrayName="locations">
+                        <div class="col-md-12 mb-3" *ngFor="let location of loactions; let i=index">
+                            <input 
+                                type="text" 
+                                class="form-control"
+                                [formControlName]="i"
+                            >
+                        </div>
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-danger float-end" (click)="removeLocationField()">Pašalinti lokaciją</button>
+                            <button type="button" class="btn btn-primary float-end  me-3" (click)="addLocationField()">Pridėti naują lokaciją</button>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-success" [disabled]="!itemForm.valid">Išsaugoti įrašą</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
